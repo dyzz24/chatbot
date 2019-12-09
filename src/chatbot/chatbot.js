@@ -2,6 +2,7 @@ import React from 'react';
 import './chatbot.css';
 import { Message } from './message/message';
 import { BotIsWriting } from './botiswriting/botiswriting';
+import SupportFeatures from './support-features/support-features';
 
 export default class ChatBot extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class ChatBot extends React.Component {
   }
 
   inputElement = React.createRef();
+  supportFeatures = new SupportFeatures();
 
   componentDidMount() {
     this.botSpeakHello();
@@ -64,29 +66,58 @@ export default class ChatBot extends React.Component {
 
     if (this.state.openSession) {
 
-      this.parseUserEnter(text)
+      const status = this.supportFeatures.parseUserEnter(text);
+      this.switchActions(status.command, status.subCommand)
     }
 
 
   };
 
 
+  switchActions(action, subAction) {
+    switch(action) {
+          case 'help':
+          this.addBotMessage(`Список доступных комманд:
+          /play число - Загадываете число от 1 до 100 и бот рандомно выкидывает кости.
+          Если выкинет больше загаданного числа, побеждает, если меньше - побеждаете вы`);
+          break;
+
+          case 'play':
+              switch(subAction) {
+                    case 'invalidNumber':
+                    this.addBotMessage(`Не верный номер (от 1 до 100)`);
+                    break;
+
+                    default:
+                    this.addMessage('bot', 'Кидаю кости');
+                    this.setState({ botIsWriting: true });
+                    setTimeout(() => {
+                          const number = this.supportFeatures.randomNumberGenerate();
+                          this.addBotMessage(`Моё число ${number}`);
+                          this.addBotMessage(this.supportFeatures.numberComprasion(number, subAction));
+                          this.setState({ botIsWriting: false });
+                    }, 2000);
+              }
+          
+          break;
+
+          case 'null':
+          this.addBotMessage(`Такой комманды нет`);
+          break;
+
+          default :
+          break;
+    }
+  }
+
+
   // * отвечает за отображение сообщений с двух сторон (юзер и бот)
   addMessage = (type, text) => {
-    
-    const inputValue = this.inputElement.current.value;
-    const message = {
-      id: Number(this.state.messages[this.state.messages.length - 1].id) + Math.random(),
-      type: type || 'user',
-      message: text || inputValue
-    };
 
+    const message = this.supportFeatures.messageGenerate(type, text, Number(this.state.messages[this.state.messages.length - 1].id));
     this.setState(state => ({
       messages: [...state.messages, message]
     }));
-
-
-
 
   }
 
@@ -97,9 +128,7 @@ export default class ChatBot extends React.Component {
     // * получить список команд
       if (text.match(/^help$/) || text.match(/^\/help$/)) {
 
-        this.addBotMessage(`Список доступных комманд:
-        /help
-        `);
+        
 
       } else {
         this.addBotMessage('Команда не найдена')
