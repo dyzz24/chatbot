@@ -1,0 +1,15 @@
+.messageRow .bigsize div {
+    font-size: 26px;
+    animation: writingAnim 1s infinite;
+    letter-spacing: 6px;
+}
+
+@keyframes writingAnim {
+    0% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

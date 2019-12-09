@@ -58,6 +58,7 @@
     flex-direction: column;
     overflow: auto;
     background: rgb(245, 248, 251);
+    padding: 10px;
 }
 
 .chatBot__bottomblock {
