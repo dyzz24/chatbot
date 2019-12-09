@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
-import ChatBot from './chatbot/chatbot';
+import Wrapper from './wrapper/wrapper';
+
 
 function App() {
   return (
     <div className="App">
-      <ChatBot/>
+      <Wrapper/>
     </div>
   );
 }
