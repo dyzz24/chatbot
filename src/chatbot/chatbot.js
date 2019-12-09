@@ -4,6 +4,7 @@ import { Message } from './message/message';
 import { BotIsWriting } from './botiswriting/botiswriting';
 import SupportFeatures from './support-features/support-features';
 import { animateScroll } from "react-scroll";
+import Httpservice from './httpservice/httpservice';
 
 export default class ChatBot extends React.Component {
   constructor(props) {
@@ -28,6 +29,9 @@ export default class ChatBot extends React.Component {
 
   inputElement = React.createRef();
   supportFeatures = new SupportFeatures();
+  http = new Httpservice();
+  API = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  APIID = '&appid=0f49363de5af37c512e1a84dd3bab4dd';
 
   componentDidMount() {
     this.botSpeakHello();
@@ -68,6 +72,7 @@ export default class ChatBot extends React.Component {
     if (this.state.openSession) {
 
       const status = this.supportFeatures.parseUserEnter(text);
+      console.log(status);
       this.switchActions(status.command, status.subCommand)
     }
 
@@ -79,8 +84,10 @@ export default class ChatBot extends React.Component {
     switch(action) {
           case 'help':
           this.addBotMessage(`Список доступных комманд:
-          /play число - Загадываете число от 1 до 100 и бот рандомно выкидывает кости.
-          Если выкинет больше загаданного числа, побеждает, если меньше - побеждаете вы`);
+          /play число - Загадываете число от 1 до 100 и соревнуйся с ботом в везении
+          `);
+
+          this.addBotMessage(`/weather Имя города (англ) - Получить прогноз погоды в конкретном городе`);
           break;
 
           case 'play':
@@ -99,7 +106,12 @@ export default class ChatBot extends React.Component {
                           this.setState({ botIsWriting: false });
                     }, 2000);
               }
-          
+          break;
+
+          case 'weather':
+          this.addMessage('bot', `Запрашиваю погоду в городе ${subAction}`);
+          this.setState({ botIsWriting: true });
+          this.getWeather(subAction)
           break;
 
           case 'null':
@@ -109,6 +121,23 @@ export default class ChatBot extends React.Component {
           default :
           break;
     }
+
+    this.inputElement.current.value = '';
+  }
+
+  getWeather(cityName) {
+    const data = this.http.getData(
+      `${this.API}${cityName}${this.APIID}`
+    );
+    data
+      .then(response => {
+
+        this.addBotMessage(`В городе ${response.name} температура ${response.temp}C, 
+        давление ${response.pressure}мм.рт.ст., скорость ветра ${response.windSpeed}м/с`);
+      })
+      .catch(error => {
+        this.addBotMessage(`Город не найден`);
+      });
   }
 
 
@@ -120,8 +149,12 @@ export default class ChatBot extends React.Component {
       messages: [...state.messages, message]
     }));
 
-    this.scrollToBottom();
+    
 
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
 

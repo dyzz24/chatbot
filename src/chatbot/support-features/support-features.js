@@ -33,7 +33,13 @@ export default class SupportFeatures extends React.Component {
           return {command: 'play', subCommand: number}
         }
 
-    }
+    }  else if (text.match(/\/weather/)) {
+
+      const cityName = text.replace('/weather', '').trim();
+      return {command: 'weather', subCommand: cityName}
+
+
+  }
 
     else {
       return {command: 'null'}

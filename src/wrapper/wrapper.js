@@ -16,8 +16,8 @@ export default class Wrapper extends React.Component {
         userAvatarSrc: 'https://img.icons8.com/dusk/2x/user.png',
         messageTimeOut: 60,
         helloMessages: [{type: 'bot', message: 'Привет!', id: 0},
-        {type: 'bot', message: 'я твоя тётушка мМолли', id: 1},
-        {type: 'bot', message: 'Как звать тебя мать твою', id: 2}
+        {type: 'bot', message: 'Я бот, меня зовут Тупак', id: 1},
+        {type: 'bot', message: 'Как тебя зовут?', id: 2}
       ]
       }
     };
