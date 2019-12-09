@@ -3,6 +3,7 @@ import './chatbot.css';
 import { Message } from './message/message';
 import { BotIsWriting } from './botiswriting/botiswriting';
 import SupportFeatures from './support-features/support-features';
+import { animateScroll } from "react-scroll";
 
 export default class ChatBot extends React.Component {
   constructor(props) {
@@ -119,6 +120,8 @@ export default class ChatBot extends React.Component {
       messages: [...state.messages, message]
     }));
 
+    this.scrollToBottom();
+
   }
 
 
@@ -164,8 +167,8 @@ export default class ChatBot extends React.Component {
 
   viewMessages = () => {
     const messageList = this.state.messages.map((message, index) => (
-      <div key={message.id}>
-        <Message
+     
+        <Message key={message.id}
           message={message.message}
           type={message.type}
           avatar={
@@ -174,11 +177,17 @@ export default class ChatBot extends React.Component {
               : this.state.userAvatarSrc
           }
         ></Message>
-      </div>
+ 
     ));
 
     return messageList;
   };
+
+
+  scrollToBottom = () => {
+    animateScroll.scrollToBottom({containerId: 'bodyId'})
+ 
+  }
 
   render() {
     const messageList = this.viewMessages();
@@ -200,7 +209,9 @@ export default class ChatBot extends React.Component {
           <i className="closeicon">close</i>
         </div>
 
-        <div className="chatBot__body">
+        <div className="chatBot__body"
+        id = 'bodyId'
+        >
           {messageList}
           {pendingBotWriting ? (
             <BotIsWriting avatar={this.state.botAvatarSrc}></BotIsWriting>
