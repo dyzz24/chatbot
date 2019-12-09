@@ -84,7 +84,6 @@ export default class ChatBot extends React.Component {
       messages: [...state.messages, message]
     }));
 
-    console.log(this.state, message)
 
 
 
@@ -97,7 +96,9 @@ export default class ChatBot extends React.Component {
     // * получить список команд
       if (text.match(/^help$/) || text.match(/^\/help$/)) {
 
-        this.addBotMessage('держи')
+        this.addBotMessage(`Список доступных комманд:
+        /hhhh
+        `);
 
       } else {
         this.addBotMessage('что за ')
