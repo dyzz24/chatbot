@@ -5,6 +5,8 @@ import './header.css';
 
 export const Header = (props) => {
 
+  
+
   return(
     <div className="chatBot__header">
           <div className="header__section">
@@ -13,7 +15,7 @@ export const Header = (props) => {
             </div>
             <span>{props.botName}</span>
           </div>
-          <i className="closeicon">close</i>
+          <i className="closeicon" onClick = {props.hideBot}>close</i>
         </div>
   )
 }

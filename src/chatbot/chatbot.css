@@ -24,3 +24,9 @@
     padding: 10px;
 }
 
+.chatBot__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+

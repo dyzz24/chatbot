@@ -28,6 +28,10 @@ export default class Form extends React.Component {
     this.inputElement.current.focus();
   }
 
+  componentDidMount() {
+    this.inputElement.current.focus();
+  }
+
 
   render() {
 
@@ -36,7 +40,7 @@ export default class Form extends React.Component {
       <React.Fragment>
       {this.props.openSession ? <Macros macrosList = {this.props.macrosList} setInputValue = {this.setInputValue}></Macros> : null}
     <div className="chatBot__bottomblock">
-    <form onSubmit = {(e) => this.sendMessage(e)}>
+    <form onSubmit = {(e) => this.sendMessage(e)} placeholder = 'Введите текст'>
     <input type="text" ref={this.inputElement}></input>
     {
       this.props.botIsWaitingForName || this.props.openSession ?

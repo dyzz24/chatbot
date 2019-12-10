@@ -1,7 +1,37 @@
 .chatBot__bottomblock {
-    height: 50px;
+    height: 60px;
     width: 100%;
-    padding: 10px;
     flex-shrink: 0;
     border-top: 1px solid rgb(238, 238, 238);
+}
+
+form {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+}
+
+input {
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+    font-size: 16px;
+    -webkit-appearance: none;
+    border: none;
+    border-image: initial;
+    border-radius: 0px 10px 10px 10px;
+    outline: none;
+
+    border: 1px solid rgb(141, 141, 141);
+    padding: 0 16px;
+    margin-right: 10px;
+}
+
+input:focus {
+    border: 1px solid #557feb;
+}
+
+button {
+    flex-shrink: 0;
 }

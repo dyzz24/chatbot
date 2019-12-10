@@ -27,7 +27,8 @@ export default class ChatBot extends React.Component {
       botIsWriting: false,
       botIsWaitingForName: false,
       userName: '',
-      openSession: false
+      openSession: false,
+      hideBot: false
     };
   }
 
@@ -149,6 +150,13 @@ export default class ChatBot extends React.Component {
     animateScroll.scrollToBottom({ containerId: 'bodyId' });
   };
 
+  hideBot = () => {
+    this.setState(state => ({
+      hideBot: !state.hideBot
+    }));
+
+  }
+
   render() {
     const messageList = this.viewMessages();
     const pendingBotWriting = this.state.botIsWriting;
@@ -157,13 +165,15 @@ export default class ChatBot extends React.Component {
     return (
       <div
         className="chatBot"
-        style={{ width: this.state.boxWidth, height: this.state.boxHeight }}
+        style={{ width: this.state.boxWidth, height: !this.state.hideBot ? this.state.boxHeight : '50px' }}
       >
         <Header
           botAvatarSrc={botAvatarSrc}
           botName={botName}
+          hideBot = {this.hideBot}
         ></Header>
 
+        <div className = 'chatBot__wrapper' style = {{display: this.state.hideBot ? 'none' : 'flex'}}>
         <div className="chatBot__body" id="bodyId">
           {messageList}
           {pendingBotWriting ? (
@@ -183,6 +193,7 @@ export default class ChatBot extends React.Component {
           addMessage={(type, msg) => this.addMessage(type, msg)}
           handlerParentState={flag => this.handlerParentState(flag)}
         ></Actions>
+        </div>
       </div>
     );
   }
