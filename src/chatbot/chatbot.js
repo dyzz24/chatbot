@@ -30,9 +30,7 @@ export default class ChatBot extends React.Component {
 
   inputElement = React.createRef();
   supportFeatures = new SupportFeatures();
-  http = new Httpservice();
-  API = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  APIID = '&appid=0f49363de5af37c512e1a84dd3bab4dd';
+
   child = React.createRef();
 
   componentDidMount() {
@@ -74,7 +72,6 @@ export default class ChatBot extends React.Component {
     if (this.state.openSession) {
 
       const status = this.supportFeatures.parseUserEnter(text);
-      console.log(status);
       this.child.current.switchActions(status.command, status.subCommand);
       this.inputElement.current.value = '';
     }
@@ -83,21 +80,6 @@ export default class ChatBot extends React.Component {
   };
 
 
-
-  getWeather(cityName) {
-    const data = this.http.getData(
-      `${this.API}${cityName}${this.APIID}`
-    );
-    data
-      .then(response => {
-
-        this.addBotMessage(`В городе ${response.name} температура ${response.temp}C, 
-        давление ${response.pressure}мм.рт.ст., скорость ветра ${response.windSpeed}м/с`);
-      })
-      .catch(error => {
-        this.addBotMessage(`Город не найден`);
-      });
-  }
 
   handlerParentState = (flag) => {
     this.setState({ botIsWriting: flag });

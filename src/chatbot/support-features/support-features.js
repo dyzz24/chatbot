@@ -1,9 +1,14 @@
 import React from 'react';
+import Httpservice from '../httpservice/httpservice';
 
 
 
 export default class SupportFeatures extends React.Component {
   
+
+  http = new Httpservice();
+  API = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  APIID = '&appid=0f49363de5af37c512e1a84dd3bab4dd';
 
 
   messageGenerate(type, text, id) {
@@ -46,6 +51,7 @@ export default class SupportFeatures extends React.Component {
     }
   }
 
+  // * for play */
   randomNumberGenerate() {
       const randomNumber = Math.floor(Math.random() * 100) + 1;
       return randomNumber;
@@ -63,6 +69,13 @@ export default class SupportFeatures extends React.Component {
       if (randomNumber == userNumber) {
         return 'Ничья'
       }
+  }
+
+  async getWeather(cityName) {
+    const data = this.http.getData(
+      `${this.API}${cityName}${this.APIID}`
+    );
+      return data;
   }
 
 }
