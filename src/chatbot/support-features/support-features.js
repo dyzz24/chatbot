@@ -62,7 +62,7 @@ export default class SupportFeatures extends React.Component {
 
   numberComprasion(randomNumber, userNumber) {
       if (randomNumber > userNumber) {
-        return 'Бот выиграл'
+        return 'Я выиграл'
       }
 
       if (randomNumber < userNumber) {
