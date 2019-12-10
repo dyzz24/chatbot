@@ -14,7 +14,7 @@ export default class Wrapper extends React.Component {
         boxHeight: 600,
         botAvatarSrc: 'https://igorzuevich.com/wp-content/uploads/2018/01/chat-bot-v-telegram.png',
         userAvatarSrc: 'https://img.icons8.com/dusk/2x/user.png',
-        messageTimeOut: 60,
+        messageTimeOut: 1800,
         helloMessages: [{type: 'bot', message: 'Привет!', id: 0},
         {type: 'bot', message: 'Я бот, меня зовут Тупак', id: 1},
         {type: 'bot', message: 'Как тебя зовут?', id: 2}
