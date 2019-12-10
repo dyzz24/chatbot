@@ -5,6 +5,7 @@ import { BotIsWriting } from './botiswriting/botiswriting';
 import SupportFeatures from './support-features/support-features';
 import { animateScroll } from "react-scroll";
 import Httpservice from './httpservice/httpservice';
+import Actions from './actions/actions';
 
 export default class ChatBot extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ export default class ChatBot extends React.Component {
   http = new Httpservice();
   API = 'https://api.openweathermap.org/data/2.5/weather?q=';
   APIID = '&appid=0f49363de5af37c512e1a84dd3bab4dd';
+  child = React.createRef();
 
   componentDidMount() {
     this.botSpeakHello();
@@ -73,57 +75,14 @@ export default class ChatBot extends React.Component {
 
       const status = this.supportFeatures.parseUserEnter(text);
       console.log(status);
-      this.switchActions(status.command, status.subCommand)
+      this.child.current.switchActions(status.command, status.subCommand);
+      this.inputElement.current.value = '';
     }
 
 
   };
 
 
-  switchActions(action, subAction) {
-    switch(action) {
-          case 'help':
-          this.addBotMessage(`Список доступных комманд:
-          /play число - Загадываете число от 1 до 100 и соревнуйся с ботом в везении
-          `);
-
-          this.addBotMessage(`/weather Имя города (англ) - Получить прогноз погоды в конкретном городе`);
-          break;
-
-          case 'play':
-              switch(subAction) {
-                    case 'invalidNumber':
-                    this.addBotMessage(`Не верный номер (от 1 до 100)`);
-                    break;
-
-                    default:
-                    this.addMessage('bot', 'Кидаю кости');
-                    this.setState({ botIsWriting: true });
-                    setTimeout(() => {
-                          const number = this.supportFeatures.randomNumberGenerate();
-                          this.addBotMessage(`Моё число ${number}`);
-                          this.addBotMessage(this.supportFeatures.numberComprasion(number, subAction));
-                          this.setState({ botIsWriting: false });
-                    }, 2000);
-              }
-          break;
-
-          case 'weather':
-          this.addMessage('bot', `Запрашиваю погоду в городе ${subAction}`);
-          this.setState({ botIsWriting: true });
-          this.getWeather(subAction)
-          break;
-
-          case 'null':
-          this.addBotMessage(`Такой комманды нет`);
-          break;
-
-          default :
-          break;
-    }
-
-    this.inputElement.current.value = '';
-  }
 
   getWeather(cityName) {
     const data = this.http.getData(
@@ -138,6 +97,10 @@ export default class ChatBot extends React.Component {
       .catch(error => {
         this.addBotMessage(`Город не найден`);
       });
+  }
+
+  handlerParentState = (flag) => {
+    this.setState({ botIsWriting: flag });
   }
 
 
@@ -257,6 +220,11 @@ export default class ChatBot extends React.Component {
             <button onClick={this.sendMessage}>кнопка</button> : null
             }
         </div>
+        <Actions ref = {this.child} 
+        addBotMessage = {(e) => this.addBotMessage(e)}
+        addMessage = {(type, msg) => this.addMessage(type, msg)}
+        handlerParentState = {(flag) => this.handlerParentState(flag)}
+        ></Actions>
       </div>
     );
   }
