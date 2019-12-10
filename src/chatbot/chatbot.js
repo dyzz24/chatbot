@@ -94,7 +94,6 @@ export default class ChatBot extends React.Component {
       messages: [...state.messages, message]
     }));
 
-    
 
   }
 
@@ -202,7 +201,7 @@ export default class ChatBot extends React.Component {
             <button onClick={this.sendMessage}>кнопка</button> : null
             }
         </div>
-        <Actions ref = {this.child} 
+        <Actions ref = {this.child}
         addBotMessage = {(e) => this.addBotMessage(e)}
         addMessage = {(type, msg) => this.addMessage(type, msg)}
         handlerParentState = {(flag) => this.handlerParentState(flag)}

@@ -71,6 +71,6 @@ export default class Actions extends React.Component {
   }
 
   render() {
-    return <p></p>;
+    return null;
   }
 }
