@@ -61,6 +61,9 @@ export default class ChatBot extends React.Component {
   sendMessage = () => {
 
     const text = this.inputElement.current.value;
+    if(!text) {
+      return;
+    }
     // * при первом запуске ждет имя пользователя, получив его открывает сессию
     if (this.state.botIsWaitingForName && this.state.userName === '' && text !== '') {
         this.setUserName();
@@ -78,8 +81,6 @@ export default class ChatBot extends React.Component {
 
 
   };
-
-
 
   handlerParentState = (flag) => {
     this.setState({ botIsWriting: flag });
@@ -102,19 +103,6 @@ export default class ChatBot extends React.Component {
   }
 
 
-  parseUserEnter = (userString) => {
-    const text = userString.trim();
-
-    // * получить список команд
-      if (text.match(/^help$/) || text.match(/^\/help$/)) {
-
-        
-
-      } else {
-        this.addBotMessage('Команда не найдена')
-      }
-
-  }
 
 
   addBotMessage(message) {
