@@ -58,8 +58,9 @@ export default class ChatBot extends React.Component {
     });
   }
 
-  sendMessage = () => {
-
+  sendMessage = (e) => {
+    console.log(e);
+    e.preventDefault()
     const text = this.inputElement.current.value;
     if(!text) {
       return;
@@ -184,11 +185,13 @@ export default class ChatBot extends React.Component {
           ) : null}
         </div>
         <div className="chatBot__bottomblock">
+          <form onSubmit = {(e) => this.sendMessage(e)}>
           <input type="text" ref={this.inputElement}></input>
           {
             this.state.botIsWaitingForName || this.state.openSession ?
             <button onClick={this.sendMessage}>кнопка</button> : null
             }
+          </form>
         </div>
         <Actions ref = {this.child}
         addBotMessage = {(e) => this.addBotMessage(e)}
