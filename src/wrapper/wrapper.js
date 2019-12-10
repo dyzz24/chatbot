@@ -18,7 +18,12 @@ export default class Wrapper extends React.Component {
         helloMessages: [{type: 'bot', message: 'Привет!', id: 0},
         {type: 'bot', message: 'Я бот, меня зовут Тупак', id: 1},
         {type: 'bot', message: 'Как тебя зовут?', id: 2}
-      ]
+      ],
+      macrosList: [
+        {title: 'Помощь', command:'/help '}, 
+        {title: 'Игра', command:'/play '},
+        {title: 'Погода', command:'/weather '},
+        {title: 'Перевод', command:'/translate '},]
       }
     };
   }

@@ -3,7 +3,7 @@ import './chatbot.css';
 import { Message } from './message/message';
 import { BotIsWriting } from './botiswriting/botiswriting';
 import SupportFeatures from './support-features/support-features';
-import { animateScroll } from "react-scroll";
+import { animateScroll } from 'react-scroll';
 import Httpservice from './httpservice/httpservice';
 import Actions from './actions/actions';
 import Form from './form/form';
@@ -21,6 +21,7 @@ export default class ChatBot extends React.Component {
       userAvatarSrc: this.props.chatBotConfig.userAvatarSrc,
       messageTimeOut: this.props.chatBotConfig.messageTimeOut,
       helloMessages: this.props.chatBotConfig.helloMessages,
+      macrosList: this.props.chatBotConfig.macrosList,
       messages: [],
 
       botIsWriting: false,
@@ -38,7 +39,6 @@ export default class ChatBot extends React.Component {
     this.botSpeakHello();
   }
 
-
   // * отображение первых сообщений бота
   // * состояние botIsWaitingForName - срабатывает лишь раз, когда боту требуется имя пользователя
   botSpeakHello() {
@@ -53,55 +53,51 @@ export default class ChatBot extends React.Component {
         counter = counter + 1;
 
         if (counter === arr.length) {
-          this.setState({ botIsWriting: false, botIsWaitingForName: true});
+          this.setState({ botIsWriting: false, botIsWaitingForName: true });
         }
       }, this.state.messageTimeOut * index);
     });
   }
 
-  sendMessage = (text) => {
-
-
+  sendMessage = text => {
     // * при первом запуске ждет имя пользователя, получив его открывает сессию
-    if (this.state.botIsWaitingForName && this.state.userName === '' && text !== '') {
-        this.setUserName(text);
-        return;
+    if (
+      this.state.botIsWaitingForName &&
+      this.state.userName === '' &&
+      text !== ''
+    ) {
+      this.setUserName(text);
+      return;
     }
 
     this.addMessage('user', text);
 
     if (this.state.openSession) {
-
       const status = this.supportFeatures.parseUserEnter(text);
       console.log(status);
       this.child.current.switchActions(status.command, status.subCommand);
     }
-
-
   };
 
-  handlerParentState = (flag) => {
+  handlerParentState = flag => {
     this.setState({ botIsWriting: flag });
-  }
-
+  };
 
   // * отвечает за отображение сообщений с двух сторон (юзер и бот)
   addMessage = (type, text) => {
-
-    const message = this.supportFeatures.messageGenerate(type, text, Number(this.state.messages[this.state.messages.length - 1].id));
+    const message = this.supportFeatures.messageGenerate(
+      type,
+      text,
+      Number(this.state.messages[this.state.messages.length - 1].id)
+    );
     this.setState(state => ({
       messages: [...state.messages, message]
     }));
-
-
-  }
+  };
 
   componentDidUpdate() {
     this.scrollToBottom();
   }
-
-
-
 
   addBotMessage(message) {
     // * имитация печатанья текста ботом */
@@ -112,79 +108,79 @@ export default class ChatBot extends React.Component {
     }, this.state.messageTimeOut);
   }
 
-  // * срабатывает лишь в начале, включает кнопку ввода, ставит имя пользователя, выводит соощение бота о командах, 
+  // * срабатывает лишь в начале, включает кнопку ввода, ставит имя пользователя, выводит соощение бота о командах,
   // * меняет openSession на противоположные, лишь ОДИН РАЗ после ввода имени пользователя
   // * openSession включает кнопку отправки сообщений
   setUserName(text) {
-
-    this.setState({botIsWaitingForName: false, userName: text, botIsWriting: true});
+    this.setState({
+      botIsWaitingForName: false,
+      userName: text,
+      botIsWriting: true
+    });
     this.addMessage('user', text);
     setTimeout(() => {
       this.addMessage('bot', `Добро пожаловать ${this.state.userName}`);
-      this.addMessage('bot', `Узнать полный список команд можно набрав комбинацию /help`);
-      this.setState({botIsWriting: false, openSession: true});
-
+      this.addMessage(
+        'bot',
+        `Узнать полный список команд можно набрав комбинацию /help`
+      );
+      this.setState({ botIsWriting: false, openSession: true });
     }, this.state.messageTimeOut);
   }
 
   viewMessages = () => {
     const messageList = this.state.messages.map((message, index) => (
-     
-        <Message key={message.id}
-          message={message.message}
-          type={message.type}
-          avatar={
-            message.type === 'bot'
-              ? this.state.botAvatarSrc
-              : this.state.userAvatarSrc
-          }
-        ></Message>
- 
+      <Message
+        key={message.id}
+        message={message.message}
+        type={message.type}
+        avatar={
+          message.type === 'bot'
+            ? this.state.botAvatarSrc
+            : this.state.userAvatarSrc
+        }
+      ></Message>
     ));
 
     return messageList;
   };
 
-
   scrollToBottom = () => {
-    animateScroll.scrollToBottom({containerId: 'bodyId'})
- 
-  }
+    animateScroll.scrollToBottom({ containerId: 'bodyId' });
+  };
 
   render() {
     const messageList = this.viewMessages();
     const pendingBotWriting = this.state.botIsWriting;
-
 
     return (
       <div
         className="chatBot"
         style={{ width: this.state.boxWidth, height: this.state.boxHeight }}
       >
-
         <Header
-        botAvatarSrc = {this.state.botAvatarSrc}
-        botName = {this.state.botName}
+          botAvatarSrc={this.state.botAvatarSrc}
+          botName={this.state.botName}
         ></Header>
 
-        <div className="chatBot__body"
-        id = 'bodyId'
-        >
+        <div className="chatBot__body" id="bodyId">
           {messageList}
           {pendingBotWriting ? (
             <BotIsWriting avatar={this.state.botAvatarSrc}></BotIsWriting>
           ) : null}
         </div>
-        <Form sendMessage = {this.sendMessage}
-        botIsWaitingForName = {this.state.botIsWaitingForName}
-        openSession = {this.state.openSession}
-        >
-        </Form>
+        <Form
+          sendMessage={this.sendMessage}
+          botIsWaitingForName={this.state.botIsWaitingForName}
+          openSession={this.state.openSession}
+          macrosList = {this.state.macrosList}
+        ></Form>
 
-        <Actions ref = {this.child}
-        addBotMessage = {(e) => this.addBotMessage(e)}
-        addMessage = {(type, msg) => this.addMessage(type, msg)}
-        handlerParentState = {(flag) => this.handlerParentState(flag)}
+        <Actions
+          ref={this.child}
+          addBotMessage={e => this.addBotMessage(e)}
+          addMessage={(type, msg) => this.addMessage(type, msg)}
+          handlerParentState={flag => this.handlerParentState(flag)}
         ></Actions>
       </div>
     );

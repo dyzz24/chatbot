@@ -1,0 +1,40 @@
+.macrosList {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.macros {
+
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 14px;
+    background: rgba(85, 128, 235, 0.733);
+    margin-right: 6px;
+    color: white;
+    transition: .4s;
+    animation: show 1s;
+
+}
+
+.macros:hover {
+    background: rgba(85, 128, 235, 1);
+}
+
+@keyframes show {
+    0% {
+        transform: translateX(-900px);
+
+    }
+
+
+    100% {
+        transform: translateX(0px);
+
+    }
+}
