@@ -13,43 +13,6 @@
     bottom: 10px;
 }
 
-.chatBot__header {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    flex-shrink: 0;
-    border-bottom: 1px solid rgb(238, 238, 238);
-}
-
-.header__section {
-    display: flex;
-    align-items: center;
-}
-
-.header__section span {
-    margin-left: 8px;
-    font-size: 16px;
-    color: #557feb;
-}
-
-.header__botavatar {
-    width: 35px;
-    height: 35px;
-    padding: 4px;
-    background: #2389f9;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.header__botavatar img {
-    width: 90%;
-    height: 90%;
-}
 
 .chatBot__body {
     width: 100%;

@@ -15,6 +15,9 @@ export default class Form extends React.Component {
   sendMessage = (e) =>  {
     e.preventDefault();
     const txt = this.inputElement.current.value;
+    if (!txt) {
+      return;
+    }
     this.props.sendMessage(txt);
     this.inputElement.current.value = '';
   }

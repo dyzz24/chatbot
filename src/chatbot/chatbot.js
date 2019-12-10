@@ -7,6 +7,7 @@ import { animateScroll } from "react-scroll";
 import Httpservice from './httpservice/httpservice';
 import Actions from './actions/actions';
 import Form from './form/form';
+import { Header } from './header/header';
 
 export default class ChatBot extends React.Component {
   constructor(props) {
@@ -58,15 +59,12 @@ export default class ChatBot extends React.Component {
     });
   }
 
-  sendMessage = (txt) => {
+  sendMessage = (text) => {
 
-    const text = txt;
-    if(!text) {
-      return;
-    }
+
     // * при первом запуске ждет имя пользователя, получив его открывает сессию
     if (this.state.botIsWaitingForName && this.state.userName === '' && text !== '') {
-        this.setUserName(txt);
+        this.setUserName(text);
         return;
     }
 
@@ -163,15 +161,11 @@ export default class ChatBot extends React.Component {
         className="chatBot"
         style={{ width: this.state.boxWidth, height: this.state.boxHeight }}
       >
-        <div className="chatBot__header">
-          <div className="header__section">
-            <div className="header__botavatar">
-              <img alt="botavatar" src={this.state.botAvatarSrc}></img>
-            </div>
-            <span>{this.state.botName}</span>
-          </div>
-          <i className="closeicon">close</i>
-        </div>
+
+        <Header
+        botAvatarSrc = {this.state.botAvatarSrc}
+        botName = {this.state.botName}
+        ></Header>
 
         <div className="chatBot__body"
         id = 'bodyId'
