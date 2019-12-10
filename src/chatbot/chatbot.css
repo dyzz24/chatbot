@@ -61,10 +61,3 @@
     padding: 10px;
 }
 
-.chatBot__bottomblock {
-    height: 50px;
-    width: 100%;
-    padding: 10px;
-    flex-shrink: 0;
-    border-top: 1px solid rgb(238, 238, 238);
-}

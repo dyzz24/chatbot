@@ -6,6 +6,7 @@ import SupportFeatures from './support-features/support-features';
 import { animateScroll } from "react-scroll";
 import Httpservice from './httpservice/httpservice';
 import Actions from './actions/actions';
+import Form from './form/form';
 
 export default class ChatBot extends React.Component {
   constructor(props) {
@@ -28,7 +29,6 @@ export default class ChatBot extends React.Component {
     };
   }
 
-  inputElement = React.createRef();
   supportFeatures = new SupportFeatures();
 
   child = React.createRef();
@@ -58,16 +58,15 @@ export default class ChatBot extends React.Component {
     });
   }
 
-  sendMessage = (e) => {
-    console.log(e);
-    e.preventDefault()
-    const text = this.inputElement.current.value;
+  sendMessage = (txt) => {
+
+    const text = txt;
     if(!text) {
       return;
     }
     // * при первом запуске ждет имя пользователя, получив его открывает сессию
     if (this.state.botIsWaitingForName && this.state.userName === '' && text !== '') {
-        this.setUserName();
+        this.setUserName(txt);
         return;
     }
 
@@ -78,7 +77,6 @@ export default class ChatBot extends React.Component {
       const status = this.supportFeatures.parseUserEnter(text);
       console.log(status);
       this.child.current.switchActions(status.command, status.subCommand);
-      this.inputElement.current.value = '';
     }
 
 
@@ -119,16 +117,15 @@ export default class ChatBot extends React.Component {
   // * срабатывает лишь в начале, включает кнопку ввода, ставит имя пользователя, выводит соощение бота о командах, 
   // * меняет openSession на противоположные, лишь ОДИН РАЗ после ввода имени пользователя
   // * openSession включает кнопку отправки сообщений
-  setUserName() {
-    const text = this.inputElement.current.value;
+  setUserName(text) {
+
     this.setState({botIsWaitingForName: false, userName: text, botIsWriting: true});
     this.addMessage('user', text);
     setTimeout(() => {
-
       this.addMessage('bot', `Добро пожаловать ${this.state.userName}`);
       this.addMessage('bot', `Узнать полный список команд можно набрав комбинацию /help`);
       this.setState({botIsWriting: false, openSession: true});
-      this.inputElement.current.value = '';
+
     }, this.state.messageTimeOut);
   }
 
@@ -184,15 +181,12 @@ export default class ChatBot extends React.Component {
             <BotIsWriting avatar={this.state.botAvatarSrc}></BotIsWriting>
           ) : null}
         </div>
-        <div className="chatBot__bottomblock">
-          <form onSubmit = {(e) => this.sendMessage(e)}>
-          <input type="text" ref={this.inputElement}></input>
-          {
-            this.state.botIsWaitingForName || this.state.openSession ?
-            <button onClick={this.sendMessage}>кнопка</button> : null
-            }
-          </form>
-        </div>
+        <Form sendMessage = {this.sendMessage}
+        botIsWaitingForName = {this.state.botIsWaitingForName}
+        openSession = {this.state.openSession}
+        >
+        </Form>
+
         <Actions ref = {this.child}
         addBotMessage = {(e) => this.addBotMessage(e)}
         addMessage = {(type, msg) => this.addMessage(type, msg)}
