@@ -152,6 +152,7 @@ export default class ChatBot extends React.Component {
   render() {
     const messageList = this.viewMessages();
     const pendingBotWriting = this.state.botIsWriting;
+    const {botAvatarSrc, botName, botIsWaitingForName} = this.state;
 
     return (
       <div
@@ -159,19 +160,19 @@ export default class ChatBot extends React.Component {
         style={{ width: this.state.boxWidth, height: this.state.boxHeight }}
       >
         <Header
-          botAvatarSrc={this.state.botAvatarSrc}
-          botName={this.state.botName}
+          botAvatarSrc={botAvatarSrc}
+          botName={botName}
         ></Header>
 
         <div className="chatBot__body" id="bodyId">
           {messageList}
           {pendingBotWriting ? (
-            <BotIsWriting avatar={this.state.botAvatarSrc}></BotIsWriting>
+            <BotIsWriting avatar={botAvatarSrc}></BotIsWriting>
           ) : null}
         </div>
         <Form
           sendMessage={this.sendMessage}
-          botIsWaitingForName={this.state.botIsWaitingForName}
+          botIsWaitingForName={botIsWaitingForName}
           openSession={this.state.openSession}
           macrosList = {this.state.macrosList}
         ></Form>
