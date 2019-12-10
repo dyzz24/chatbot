@@ -44,6 +44,9 @@ export default class SupportFeatures extends React.Component {
       return {command: 'weather', subCommand: cityName}
 
 
+  } else if(text.match(/\/translate/)) {
+    const translateTxt = text.replace('/translate', '').trim();
+    return {command: 'translate', subCommand: translateTxt}
   }
 
     else {
@@ -75,6 +78,12 @@ export default class SupportFeatures extends React.Component {
     const data = this.http.getData(
       `${this.API}${cityName}${this.APIID}`
     );
+      return data;
+  }
+
+  async getTranslate(text) {
+    const data = this.http.getOtherData(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=
+    trnsl.1.1.20191210T104539Z.2eeb161aebc81077.45334090b358589ba100668eaa847973ede8bcc7&text=${text}&lang=ru`);
       return data;
   }
 

@@ -19,6 +19,10 @@ export default class Actions extends React.Component {
         this.props.addBotMessage(
           `/weather Имя города (англ) - Получить прогноз погоды в конкретном городе`
         );
+
+        this.props.addBotMessage(
+          `/translate текст на английском - Перевести слово / группу слов с английского на русский`
+        );
         break;
 
       case 'play':
@@ -56,6 +60,14 @@ export default class Actions extends React.Component {
           .catch(v => this.props.addBotMessage('Город не найден'));
 
         break;
+
+      case 'translate':
+          this.handlerParentState(true);
+          this.supportFeatures
+          .getTranslate(subAction)
+          .then(result => this.props.addBotMessage(`Перевод: " ${result.text[0]} "`))
+          .catch(() => this.props.addBotMessage('Не удалось перевести'));
+      break;
 
       case 'null':
         this.props.addBotMessage(`Такой комманды нет`);

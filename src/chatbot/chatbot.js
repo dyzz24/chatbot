@@ -75,6 +75,7 @@ export default class ChatBot extends React.Component {
     if (this.state.openSession) {
 
       const status = this.supportFeatures.parseUserEnter(text);
+      console.log(status);
       this.child.current.switchActions(status.command, status.subCommand);
       this.inputElement.current.value = '';
     }

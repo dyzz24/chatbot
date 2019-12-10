@@ -26,6 +26,22 @@ class Httpservice extends React.Component {
 
   }
 
+  async getOtherData(stringUrl) {
+
+    const request = await fetch(stringUrl);
+
+    if (request.ok) {
+      const response = await request.json();
+      return response;
+      console.log(response);
+      // return dataForChar;
+
+    }  else {
+      throw new Error(request.statusText)
+    }
+
+}
+
 
 
 
