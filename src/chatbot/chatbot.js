@@ -86,10 +86,11 @@ export default class ChatBot extends React.Component {
 
   // * отвечает за отображение сообщений с двух сторон (юзер и бот)
   addMessage = (type, text) => {
+    const id = (this.state.messages.length > 0) ? this.state.messages[this.state.messages.length - 1].id : 0;
     const message = this.supportFeatures.messageGenerate(
       type,
       text,
-      Number(this.state.messages[this.state.messages.length - 1].id)
+      id
     );
     this.setState(state => ({
       messages: [...state.messages, message]
@@ -157,6 +158,12 @@ export default class ChatBot extends React.Component {
 
   }
 
+  clearMessages = () => {
+    this.setState(state => ({
+      messages: []
+    }));
+  }
+
   render() {
     const messageList = this.viewMessages();
     const pendingBotWriting = this.state.botIsWriting;
@@ -192,6 +199,7 @@ export default class ChatBot extends React.Component {
           addBotMessage={e => this.addBotMessage(e)}
           addMessage={(type, msg) => this.addMessage(type, msg)}
           handlerParentState={flag => this.handlerParentState(flag)}
+          clearMessages = {this.clearMessages}
         ></Actions>
         </div>
       </div>

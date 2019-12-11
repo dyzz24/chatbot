@@ -24,7 +24,8 @@ export default class Wrapper extends React.Component {
         {title: 'Игра', command:'/play '},
         {title: 'Погода', command:'/weather '},
         {title: 'Перевод', command:'/translate '},
-        {title: 'Бестселлеры', command: '/bestsellers'}
+        {title: 'Бестселлеры', command: '/bestsellers'},
+        {title: 'Очистить', command: '/clear'}
       ]
       }
     };

@@ -36,6 +36,8 @@ export default class SupportFeatures extends React.Component {
       return { command: 'translate', subCommand: translateTxt };
     } else if (text.match(/\/bestsellers/)) {
       return { command: 'bestsellers' };
+    } else if (text.match(/\/clear/)) {
+      return { command: 'clear' };
     } else {
       return { command: 'null' };
     }

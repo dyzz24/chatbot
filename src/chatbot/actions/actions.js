@@ -92,6 +92,10 @@ export default class Actions extends React.Component {
           .catch(() => {});
         break;
 
+        case 'clear':
+          this.props.clearMessages();
+        break;
+
       case 'null':
         this.props.addBotMessage(`Такой комманды нет`);
         break;
@@ -100,6 +104,8 @@ export default class Actions extends React.Component {
         break;
     }
   };
+
+
 
   handlerParentState(flag) {
     this.props.handlerParentState(flag);
