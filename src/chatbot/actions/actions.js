@@ -23,6 +23,10 @@ export default class Actions extends React.Component {
         this.props.addBotMessage(
           `/translate текст на английском - Перевести слово / группу слов с английского на русский`
         );
+
+        this.props.addBotMessage(
+          `/bestsellers - загрузить список из 5 бестселлеров по версии NY times с кратким описанием`
+        );
         break;
 
       case 'play':
@@ -62,12 +66,31 @@ export default class Actions extends React.Component {
         break;
 
       case 'translate':
-          this.handlerParentState(true);
-          this.supportFeatures
+        this.handlerParentState(true);
+        this.supportFeatures
           .getTranslate(subAction)
-          .then(result => this.props.addBotMessage(`Перевод: " ${result.text[0]} "`))
+          .then(result =>
+            this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
+          )
           .catch(() => this.props.addBotMessage('Не удалось перевести'));
-      break;
+        break;
+
+      case 'bestsellers':
+        this.handlerParentState(true);
+        this.supportFeatures
+          .getBestsellers()
+          .then(result => {
+            const bestSellersArr = this.supportFeatures.parseBestsellers(
+              result.results,
+              85,
+              5
+            );
+            bestSellersArr.forEach(book => {
+              this.props.addBotMessage(book);
+            });
+          })
+          .catch(() => {});
+        break;
 
       case 'null':
         this.props.addBotMessage(`Такой комманды нет`);
