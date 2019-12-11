@@ -164,8 +164,8 @@ export default class ChatBot extends React.Component {
 
     return (
       <div
-        className="chatBot"
-        style={{ width: this.state.boxWidth, height: !this.state.hideBot ? this.state.boxHeight : '50px' }}
+        className={this.state.hideBot? "chatBot hide" : "chatBot"}
+        style={{ width: this.state.boxWidth, height: this.state.boxHeight }}
       >
         <Header
           botAvatarSrc={botAvatarSrc}
