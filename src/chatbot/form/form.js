@@ -44,7 +44,7 @@ export default class Form extends React.Component {
     <input type="text" ref={this.inputElement}></input>
     {
       this.props.botIsWaitingForName || this.props.openSession ?
-      <button onClick={this.sendMessage}>кнопка</button> : null
+      <i className = 'submitter' onClick={this.sendMessage}></i> : null
       }
     </form>
     </div>

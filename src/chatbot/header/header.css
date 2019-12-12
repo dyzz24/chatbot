@@ -25,7 +25,7 @@
     width: 35px;
     height: 35px;
     padding: 4px;
-    background: #2389f9;
+    background: rgba(255, 70, 70, 0.767);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -54,20 +54,20 @@
 }
 
 .hide {
-    border-bottom: 4px solid rgba(85, 128, 235, 0.788);
+    border-bottom: 3px solid rgba(85, 128, 235, 0.788);
     border-radius: 1px;
 
 }
 
 .full {
-    border: 3px solid rgba(85, 128, 235, 0.788);
+    border: 2px solid rgba(85, 128, 235, 0.788);
     border-radius: 6px;
 }
 
 .hide.active {
-    border-bottom: 4px solid rgba(255, 70, 70, 0.767);
+    border-bottom: 3px solid rgba(255, 70, 70, 0.767);
 }
 
 .full.active {
-    border: 3px solid rgba(255, 70, 70, 0.767);
+    border: 2px solid rgba(255, 70, 70, 0.767);
 }
