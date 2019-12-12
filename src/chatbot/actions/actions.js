@@ -92,6 +92,30 @@ export default class Actions extends React.Component {
           .catch(() => {});
         break;
 
+        case 'news':
+        this.handlerParentState(true);
+        this.supportFeatures
+          .getLastNews(subAction)
+          .then(result =>
+            {
+              
+              const newsArr = this.supportFeatures.parseBestsellers(
+                result.articles,
+                150,
+                2
+              );
+
+              newsArr.forEach(news => {
+                this.props.addBotMessage(news);
+              });
+
+              console.log(result, newsArr);
+            }
+            // this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
+          )
+          .catch(() => this.props.addBotMessage('Не удалось перевести'));
+        break;
+
         case 'clear':
           this.props.clearMessages();
         break;

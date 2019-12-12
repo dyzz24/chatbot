@@ -6,6 +6,9 @@ export default class SupportFeatures extends React.Component {
   API = 'https://api.openweathermap.org/data/2.5/weather?q=';
   APIID = '&appid=0f49363de5af37c512e1a84dd3bab4dd';
 
+  NEWSAPI = `https://newsapi.org/v2/everything?`
+  NEWSAPIID = `&apiKey=3b6b407a27cb4e4aae3d332cccb3b103`
+
   messageGenerate(type, text, id) {
     const message = {
       id: id + Math.random(),
@@ -38,7 +41,11 @@ export default class SupportFeatures extends React.Component {
       return { command: 'bestsellers' };
     } else if (text.match(/\/clear/)) {
       return { command: 'clear' };
-    } else {
+    }  else if (text.match(/\/news/)) {
+      const news = text.replace('/news', '').trim();
+      return { command: 'news', subCommand: news };
+    }
+    else {
       return { command: 'null' };
     }
   }
@@ -82,6 +89,13 @@ export default class SupportFeatures extends React.Component {
     return data;
   }
 
+  async getLastNews(newsFrom) {
+    const data = this.http.getOtherData(
+      `${this.NEWSAPI}q=${newsFrom}&sortBy=publishedAt${this.NEWSAPIID}`
+    );
+    return data;
+  }
+
   parseBestsellers(bestArray, descriptSlice, maxBestsellersCount) {
     if (bestArray && bestArray.length > 0) {
       const bestSellers = bestArray
@@ -92,7 +106,7 @@ export default class SupportFeatures extends React.Component {
           return { author, description, title };
         })
         .map(item => {
-          const oneString = `Автор: ${item.author}, Описание: ${item.description}, Название: ${item.title}`;
+          const oneString = `Автор: ${item.author},  Название: ${item.title},  Описание: ${item.description}`;
           return oneString;
         });
 
