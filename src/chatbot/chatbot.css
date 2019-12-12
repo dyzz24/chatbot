@@ -59,15 +59,20 @@
 
 @media (max-width: 720px) {
     .chatBot {
-        width: 400px !important;
-        height: 70% !important;
+        width: 450px !important;
+        height: 450px !important;
+    }
+
+    .messageRow span, .macros {
+        padding: 6px !important;
+        font-size: 13px !important;
     }
 }
 
 @media (max-width: 440px) {
     .chatBot {
         width: 90% !important;
-        height: 80% !important;
+        height: 300 !important;
         margin: 15px;
     }
 }

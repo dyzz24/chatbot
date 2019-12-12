@@ -35,3 +35,16 @@ input:focus {
 button {
     flex-shrink: 0;
 }
+
+@media (max-width: 720px) {
+
+
+    form {
+        padding: 4px;
+    }
+
+    input {
+        border: 1px solid rgba(255, 70, 70, 0.767);
+        
+    }
+}

@@ -46,3 +46,12 @@
     color: black;
     text-align: right;
 }
+
+@media (max-width: 720px) {
+    
+    .avatar {
+    height: 35px;
+    width: 35px;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 2px 0px;
+    }
+}
