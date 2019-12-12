@@ -33,7 +33,7 @@
 
 .chatBot.hide {
     height: 50px !important;
-    width: 170px !important;
+    width: 200px !important;
     box-shadow: rgba(0, 0, 0, 0.65) 0px 12px 24px 0px;
 }
 
@@ -44,10 +44,14 @@
     margin: 0;
 }
 
+.chatBot.hide .chatBot__wrapper {
+    display: none;
+}
+
 .hide .chatBot__header {
     background: rgb(245, 248, 251);
     border-radius: 6px;
-    width: 170px;
+    width: 200px;
 }
 
 

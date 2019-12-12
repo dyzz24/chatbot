@@ -36,3 +36,38 @@
     width: 90%;
     height: 90%;
 }
+
+.btnwrapper {
+    display: flex;
+}
+
+.btnwrapper i:not(:first-child) {
+    margin-left: 14px;
+}
+
+.hide, .full {
+        width: 25px;
+        height: 25px;
+        display: block;
+        flex-shrink: 0;
+
+}
+
+.hide {
+    border-bottom: 4px solid rgba(85, 128, 235, 0.788);
+    border-radius: 1px;
+
+}
+
+.full {
+    border: 3px solid rgba(85, 128, 235, 0.788);
+    border-radius: 6px;
+}
+
+.hide.active {
+    border-bottom: 4px solid rgba(255, 70, 70, 0.767);
+}
+
+.full.active {
+    border: 3px solid rgba(255, 70, 70, 0.767);
+}

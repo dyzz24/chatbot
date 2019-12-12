@@ -15,8 +15,10 @@ export const Header = (props) => {
             </div>
             <span>{props.botName}</span>
           </div>
-          <i className="closeicon" onClick = {props.hideBot}>close</i>
-          <i className="closeicon" onClick = {props.fullScreen}>fullscrean</i>
+          <div className = 'btnwrapper'>
+          <i className={props.hide ? 'hide active' : 'hide'} onClick = {props.hideBot} title = 'Свернуть'></i>
+          <i className={props.full ? "full active" : 'full'} onClick = {props.fullScreen} title = 'Полный экран'></i>
+          </div>
         </div>
   )
 }

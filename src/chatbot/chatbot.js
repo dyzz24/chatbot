@@ -191,6 +191,8 @@ export default class ChatBot extends React.Component {
     const pendingBotWriting = this.state.botIsWriting;
     const {botAvatarSrc, botName, botIsWaitingForName} = this.state;
     const classNameForBot = this.returnScreenBotMode();
+    const hide = this.state.hideBot;
+    const full = this.state.fullScreen;
 
     return (
       <div
@@ -202,6 +204,8 @@ export default class ChatBot extends React.Component {
           botName={botName}
           hideBot = {this.hideBot}
           fullScreen = {this.fullScreen}
+          hide = {hide}
+          full = {full}
         ></Header>
 
         <div className = 'chatBot__wrapper' >
