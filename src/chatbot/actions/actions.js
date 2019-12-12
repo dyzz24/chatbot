@@ -13,115 +13,31 @@ export default class Actions extends React.Component {
   switchActions = (action, subAction) => {
     switch (action) {
       case 'help':
-        this.props.addBotMessage(`Список доступных комманд:
-            /play число - Загадываете число от 1 до 100 и соревнуйся с ботом в везении
-            `);
-        this.props.addBotMessage(
-          `/weather Имя города (англ) - Получить прогноз погоды в конкретном городе`
-        );
-
-        this.props.addBotMessage(
-          `/translate текст на английском - Перевести слово / группу слов с английского на русский`
-        );
-
-        this.props.addBotMessage(
-          `/bestsellers - загрузить список из 5 бестселлеров по версии NY times с кратким описанием`
-        );
-
-        this.props.addBotMessage(
-          `/news Новость - загрузить 5 новостей по заданному запросу`
-        );
+        this.caseHelp();
         break;
 
       case 'play':
-        switch (subAction) {
-          case 'invalidNumber':
-            this.props.addBotMessage(`Не верный номер (от 1 до 100)`);
-            break;
-
-          default:
-            this.props.addMessage('bot', 'Кидаю кости');
-
-            this.handlerParentState(true);
-            setTimeout(() => {
-              const number = this.supportFeatures.randomNumberGenerate();
-              this.props.addBotMessage(`Моё число ${number}`);
-              this.props.addBotMessage(
-                this.supportFeatures.numberComprasion(number, subAction)
-              );
-              this.handlerParentState(false);
-            }, 2000);
-        }
+        this.casePlay(subAction);
         break;
 
       case 'weather':
-        this.props.addMessage('bot', `Запрашиваю погоду в городе ${subAction}`);
-        this.handlerParentState(true);
-
-        this.supportFeatures
-          .getWeather(subAction)
-          .then(response => {
-            this.props
-              .addBotMessage(`В городе ${response.name} температура ${response.temp}C,
-              давление ${response.pressure}мм.рт.ст., скорость ветра ${response.windSpeed}м/с`);
-          })
-          .catch(v => this.props.addBotMessage('Город не найден'));
-
+        this.caseWeather(subAction);
         break;
 
       case 'translate':
-        this.handlerParentState(true);
-        this.supportFeatures
-          .getTranslate(subAction)
-          .then(result =>
-            this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
-          )
-          .catch(() => this.props.addBotMessage('Не удалось перевести'));
+        this.caseTranslate(subAction);
         break;
 
       case 'bestsellers':
-        this.handlerParentState(true);
-        this.supportFeatures
-          .getBestsellers()
-          .then(result => {
-            const bestSellersArr = this.supportFeatures.parseBestsellers(
-              result.results,
-              85,
-              5
-            );
-            bestSellersArr.forEach(book => {
-              this.props.addBotMessage(book);
-            });
-          })
-          .catch(() => {});
+        this.caseBestsellers();
         break;
 
-        case 'news':
-        this.handlerParentState(true);
-        this.supportFeatures
-          .getLastNews(subAction)
-          .then(result =>
-            {
-              
-              const newsArr = this.supportFeatures.parseBestsellers(
-                result.articles,
-                200,
-                5
-              );
-
-              newsArr.forEach(news => {
-                this.props.addBotMessage(news);
-              });
-
-              console.log(result, newsArr);
-            }
-            // this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
-          )
-          .catch(() => this.props.addBotMessage('Не удалось найти новости'));
+      case 'news':
+        this.caseNews(subAction);
         break;
 
-        case 'clear':
-          this.props.clearMessages();
+      case 'clear':
+        this.props.clearMessages();
         break;
 
       case 'null':
@@ -133,7 +49,111 @@ export default class Actions extends React.Component {
     }
   };
 
+  caseHelp() {
+    this.props.addBotMessage(`Список доступных комманд:
+    /play число - Загадываете число от 1 до 100 и соревнуйся с ботом в везении
+    `);
+    this.props.addBotMessage(
+      `/weather Имя города (англ) - Получить прогноз погоды в конкретном городе`
+    );
 
+    this.props.addBotMessage(
+      `/translate текст на английском - Перевести слово / группу слов с английского на русский`
+    );
+
+    this.props.addBotMessage(
+      `/bestsellers - загрузить список из 5 бестселлеров по версии NY times с кратким описанием`
+    );
+
+    this.props.addBotMessage(
+      `/news Новость - загрузить 5 новостей по заданному запросу`
+    );
+  }
+
+  casePlay(subAction) {
+    switch (subAction) {
+      case 'invalidNumber':
+        this.props.addBotMessage(`Не верный номер (от 1 до 100)`);
+        break;
+
+      default:
+        this.props.addMessage('bot', 'Кидаю кости');
+
+        this.handlerParentState(true);
+        setTimeout(() => {
+          const number = this.supportFeatures.randomNumberGenerate();
+          this.props.addBotMessage(`Моё число ${number}`);
+          this.props.addBotMessage(
+            this.supportFeatures.numberComprasion(number, subAction)
+          );
+          this.handlerParentState(false);
+        }, 2000);
+    }
+  }
+
+  caseWeather(subAction) {
+    this.props.addMessage('bot', `Запрашиваю погоду в городе ${subAction}`);
+    this.handlerParentState(true);
+
+    this.supportFeatures
+      .getWeather(subAction)
+      .then(response => {
+        this.props
+          .addBotMessage(`В городе ${response.name} температура ${response.temp}C,
+          давление ${response.pressure}мм.рт.ст., скорость ветра ${response.windSpeed}м/с`);
+      })
+      .catch(v => this.props.addBotMessage('Город не найден'));
+  }
+
+  caseTranslate(subAction) {
+    this.handlerParentState(true);
+    this.supportFeatures
+      .getTranslate(subAction)
+      .then(result =>
+        this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
+      )
+      .catch(() => this.props.addBotMessage('Не удалось перевести'));
+  }
+
+  caseBestsellers() {
+    this.handlerParentState(true);
+    this.supportFeatures
+      .getBestsellers()
+      .then(result => {
+        const bestSellersArr = this.supportFeatures.parseBestsellers(
+          result.results,
+          85,
+          5
+        );
+        bestSellersArr.forEach(book => {
+          this.props.addBotMessage(book);
+        });
+      })
+      .catch(() => {});
+  }
+
+  caseNews(subAction) {
+    this.handlerParentState(true);
+    this.supportFeatures
+      .getLastNews(subAction)
+      .then(
+        result => {
+          const newsArr = this.supportFeatures.parseBestsellers(
+            result.articles,
+            200,
+            5
+          );
+
+          newsArr.forEach(news => {
+            this.props.addBotMessage(news);
+          });
+
+          console.log(result, newsArr);
+        }
+        // this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
+      )
+      .catch(() => this.props.addBotMessage('Не удалось найти новости'));
+  }
 
   handlerParentState(flag) {
     this.props.handlerParentState(flag);
