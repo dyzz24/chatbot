@@ -40,6 +40,15 @@
     text-align: left;
 }
 
+.messageRow span p {
+    margin: 8px 0;
+}
+
+.authorString {
+    font-size: 16px;
+    margin-bottom: 12px !important;
+}
+
 .messageRow.reverse span {
     border-radius: 18px 18px 0px;
     background: white;

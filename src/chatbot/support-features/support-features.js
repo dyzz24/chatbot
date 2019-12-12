@@ -106,7 +106,7 @@ export default class SupportFeatures extends React.Component {
           return { author, description, title };
         })
         .map(item => {
-          const oneString = `Автор: ${item.author},  Название: ${item.title},  Описание: ${item.description}`;
+          const oneString = `<p class = 'authorString'> Автор: ${item.author}</p>  <p> Название: ${item.title} </p>  <p> Описание: ${item.description} </p>`;
           return oneString;
         });
 

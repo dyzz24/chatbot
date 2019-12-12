@@ -27,6 +27,10 @@ export default class Actions extends React.Component {
         this.props.addBotMessage(
           `/bestsellers - загрузить список из 5 бестселлеров по версии NY times с кратким описанием`
         );
+
+        this.props.addBotMessage(
+          `/news Новость - загрузить 5 новостей по заданному запросу`
+        );
         break;
 
       case 'play':
@@ -101,8 +105,8 @@ export default class Actions extends React.Component {
               
               const newsArr = this.supportFeatures.parseBestsellers(
                 result.articles,
-                150,
-                2
+                200,
+                5
               );
 
               newsArr.forEach(news => {
