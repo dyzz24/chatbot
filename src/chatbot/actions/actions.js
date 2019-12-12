@@ -117,7 +117,7 @@ export default class Actions extends React.Component {
             }
             // this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
           )
-          .catch(() => this.props.addBotMessage('Не удалось перевести'));
+          .catch(() => this.props.addBotMessage('Не удалось найти новости'));
         break;
 
         case 'clear':
