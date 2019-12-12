@@ -33,8 +33,7 @@ class Httpservice extends React.Component {
     if (request.ok) {
       const response = await request.json();
       return response;
-      console.log(response);
-      // return dataForChar;
+
 
     }  else {
       throw new Error(request.statusText)

@@ -65,7 +65,7 @@ export default class SupportFeatures extends React.Component {
       return 'Ты выиграл';
     }
 
-    if (randomNumber == userNumber) {
+    if (randomNumber === userNumber) {
       return 'Ничья';
     }
   }

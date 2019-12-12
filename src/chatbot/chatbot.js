@@ -4,7 +4,6 @@ import { Message } from './message/message';
 import { BotIsWriting } from './botiswriting/botiswriting';
 import SupportFeatures from './support-features/support-features';
 import { animateScroll } from 'react-scroll';
-import Httpservice from './httpservice/httpservice';
 import Actions from './actions/actions';
 import Form from './form/form';
 import { Header } from './header/header';

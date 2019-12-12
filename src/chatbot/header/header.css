@@ -50,6 +50,7 @@
         height: 25px;
         display: block;
         flex-shrink: 0;
+        cursor: pointer;
 
 }
 
@@ -64,10 +65,10 @@
     border-radius: 6px;
 }
 
-.hide.active {
+.hide.active,  .hide:hover{
     border-bottom: 3px solid rgba(255, 70, 70, 0.767);
 }
 
-.full.active {
+.full.active, .full:hover {
     border: 2px solid rgba(255, 70, 70, 0.767);
 }
