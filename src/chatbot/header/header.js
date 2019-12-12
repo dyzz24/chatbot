@@ -16,6 +16,7 @@ export const Header = (props) => {
             <span>{props.botName}</span>
           </div>
           <i className="closeicon" onClick = {props.hideBot}>close</i>
+          <i className="closeicon" onClick = {props.fullScreen}>fullscrean</i>
         </div>
   )
 }

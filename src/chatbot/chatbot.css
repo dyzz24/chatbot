@@ -28,12 +28,20 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: hidden;
 }
 
 .chatBot.hide {
     height: 50px !important;
     width: 170px !important;
     box-shadow: rgba(0, 0, 0, 0.65) 0px 12px 24px 0px;
+}
+
+.chatBot.fullScreen {
+    height: 95% !important;
+    width: 95% !important;
+    box-shadow: rgba(0, 0, 0, 0.65) 0px 12px 24px 0px;
+    margin: 0;
 }
 
 .hide .chatBot__header {

@@ -28,7 +28,8 @@ export default class ChatBot extends React.Component {
       botIsWaitingForName: false,
       userName: '',
       openSession: false,
-      hideBot: false
+      hideBot: false,
+      fullScreen: false
     };
   }
 
@@ -158,29 +159,52 @@ export default class ChatBot extends React.Component {
 
   }
 
+  fullScreen = () => {
+
+    this.setState(state => ({
+      fullScreen: !state.fullScreen
+    }));
+
+  }
+
   clearMessages = () => {
     this.setState(state => ({
       messages: []
     }));
   }
 
+  returnScreenBotMode() {
+    const hideBot = this.state.hideBot;
+    const fullScreen = this.state.fullScreen;
+
+    if(hideBot && !fullScreen) {
+      return 'chatBot hide'
+    } else if(fullScreen) {
+      return 'chatBot fullScreen'
+    } else {
+      return 'chatBot'
+    }
+  }
+
   render() {
     const messageList = this.viewMessages();
     const pendingBotWriting = this.state.botIsWriting;
     const {botAvatarSrc, botName, botIsWaitingForName} = this.state;
+    const classNameForBot = this.returnScreenBotMode();
 
     return (
       <div
-        className={this.state.hideBot? "chatBot hide" : "chatBot"}
+        className={classNameForBot}
         style={{ width: this.state.boxWidth, height: this.state.boxHeight }}
       >
         <Header
           botAvatarSrc={botAvatarSrc}
           botName={botName}
           hideBot = {this.hideBot}
+          fullScreen = {this.fullScreen}
         ></Header>
 
-        <div className = 'chatBot__wrapper' style = {{display: this.state.hideBot ? 'none' : 'flex'}}>
+        <div className = 'chatBot__wrapper' >
         <div className="chatBot__body" id="bodyId">
           {messageList}
           {pendingBotWriting ? (
