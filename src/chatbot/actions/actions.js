@@ -74,11 +74,11 @@ export default class Actions extends React.Component {
         this.handlerParentState(true);
         setTimeout(() => {
           const number = this.supportFeatures.randomNumberGenerate();
+          this.handlerParentState(false);
           this.props.addBotMessage(`Моё число ${number}`);
           this.props.addBotMessage(
             this.supportFeatures.numberComprasion(number, subAction)
           );
-          this.handlerParentState(false);
         }, 2000);
     }
   }
