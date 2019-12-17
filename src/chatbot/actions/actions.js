@@ -50,24 +50,16 @@ export default class Actions extends React.Component {
   };
 
   caseHelp() {
-    this.props.addBotMessage(`Список доступных комманд:
-    /play число - Загадываете число от 1 до 100 и соревнуйся с ботом в везении
-    `);
-    this.props.addBotMessage(
-      `/weather Имя города (англ) - Получить прогноз погоды в конкретном городе`
-    );
-
-    this.props.addBotMessage(
-      `/translate текст на английском - Перевести слово / группу слов с английского на русский`
-    );
-
-    this.props.addBotMessage(
-      `/bestsellers - загрузить список из 5 бестселлеров по версии NY times с кратким описанием`
-    );
-
-    this.props.addBotMessage(
-      `/news Новость - загрузить 5 новостей по заданному запросу`
-    );
+    const helpMessagesArray = [
+      `Список доступных комманд:
+      /play число - Загадываете число от 1 до 100 и соревнуйся с ботом в везении`,
+      `/weather Имя города (англ) - Получить прогноз погоды в конкретном городе`,
+      `/translate текст на английском - Перевести слово / группу слов с английского на русский`,
+      `/bestsellers - загрузить список из 5 бестселлеров по версии NY times с кратким описанием`,
+      `/news Новость - загрузить 5 новостей по заданному запросу`,
+      `/clear - Очистить чат`
+    ];
+    helpMessagesArray.forEach(mess => this.props.addBotMessage(mess));
   }
 
   casePlay(subAction) {
