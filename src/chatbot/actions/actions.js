@@ -139,10 +139,7 @@ export default class Actions extends React.Component {
           newsArr.forEach(news => {
             this.props.addBotMessage(news);
           });
-
-          console.log(result, newsArr);
         }
-        // this.props.addBotMessage(`Перевод: " ${result.text[0]} "`)
       )
       .catch(() => this.props.addBotMessage('Не удалось найти новости'));
   }

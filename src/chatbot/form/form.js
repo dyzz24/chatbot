@@ -32,20 +32,36 @@ export default class Form extends React.Component {
     this.inputElement.current.focus();
   }
 
+  showMacros = () => {
+    if(this.props.openSession) {
+      return  <Macros macrosList = {this.props.macrosList} setInputValue = {this.setInputValue}></Macros>
+    } else {
+      return null;
+    }
+  }
+
+  showSendButton = () => {
+    if(this.props.botIsWaitingForName || this.props.openSession) {
+      return <i className = 'submitter' onClick={this.sendMessage}></i>
+    } else {
+      return null;
+    }
+  }
+
 
   render() {
+
+    const macrosList = this.showMacros();
+    const sendButton = this.showSendButton();
 
 
     return (
       <React.Fragment>
-      {this.props.openSession ? <Macros macrosList = {this.props.macrosList} setInputValue = {this.setInputValue}></Macros> : null}
+    {macrosList}
     <div className="chatBot__bottomblock">
     <form onSubmit = {(e) => this.sendMessage(e)} placeholder = 'Введите текст'>
     <input type="text" ref={this.inputElement}></input>
-    {
-      this.props.botIsWaitingForName || this.props.openSession ?
-      <i className = 'submitter' onClick={this.sendMessage}></i> : null
-      }
+    {sendButton}
     </form>
     </div>
     </React.Fragment>
