@@ -99,8 +99,10 @@ export default class SupportFeatures extends React.Component {
   parseBestsellers(bestArray, descriptSlice, maxBestsellersCount) {
     if (bestArray && bestArray.length > 0) {
       const bestSellers = bestArray
+      // * выдать определенное количество записей
         .filter((v, ind) => ind < maxBestsellersCount)
         .map(items => {
+          // * обрезать строку и поставить ... в конце
           items.description = items.description.slice(0, descriptSlice) + '...';
           const { author, description, title } = items;
           return { author, description, title };

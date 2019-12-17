@@ -53,6 +53,7 @@ export default class ChatBot extends React.Component {
 
         counter = counter + 1;
 
+        // * если отработали все приветственные сообщения, ставлю флаг
         if (counter === arr.length) {
           this.setState({ botIsWriting: false, botIsWaitingForName: true });
         }
