@@ -8,12 +8,14 @@ const mapStateToProps = state => {
 
 
 const ConnectedList = ({ commands }) => (
+  <div className = 'listwrapper'>
+  <span>Лог комманд бота (redux only)</span>
   <ol className = 'botCommandLog'>
-    <span>Лог комманд бота (redux only)</span>
     {commands.map((el, ind) => (
       <li key={ind}>{el.botCommand}</li>
     ))}
   </ol>
+  </div>
 );
 const List = connect(mapStateToProps)(ConnectedList);
 export default List;

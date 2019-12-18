@@ -1,5 +1,9 @@
 .app {
-  
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  min-height: 100vh;
+  justify-content: space-between;
 }
 
 @media (max-width: 900px) {
@@ -27,5 +31,9 @@
 
   .forecast {
     padding: 15px 30px 15px 30px;
+  }
+
+  .app {
+    flex-direction: column;
   }
 }

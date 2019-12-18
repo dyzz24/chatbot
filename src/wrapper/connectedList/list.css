@@ -1,8 +1,6 @@
 .botCommandLog {
         width: 300px;
-        position: absolute;
-        left: 10px;
-        top: 0;
+
         max-height: 350px;
         overflow-y: auto;
         background: rgb(245, 248, 251);
@@ -13,14 +11,16 @@
         border-radius: 6px;
         list-style-position: inside;
         z-index: 1;
+        position: relative;
 
 
 }
 
-.botCommandLog span {
+ span {
     font-size: 16px;
     font-weight: 600;
     color: #557feb;
+
 
 }
 
@@ -31,4 +31,16 @@
     overflow: hidden;
     white-space: nowrap;
 
+}
+
+.listwrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media (max-width: 900px) {
+    .botCommandLog {
+        display: none;
+    }
 }
