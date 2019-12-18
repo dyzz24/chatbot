@@ -39,10 +39,10 @@ export default class Wrapper extends React.Component {
 
 
     return (
-      <React.Fragment>
-      <List></List>
+
+     
     <ChatBot chatBotConfig = {this.state.chatBotConfig}></ChatBot>
-    </React.Fragment>
+
     );
   }
 }
