@@ -1,6 +1,7 @@
 import React from 'react';
 import './wrapper.css';
 import ChatBot from '../chatbot/chatbot';
+import List from './connectedList/list';
 
 
 
@@ -37,6 +38,11 @@ export default class Wrapper extends React.Component {
   render() {
 
 
-    return (<ChatBot chatBotConfig = {this.state.chatBotConfig}></ChatBot>);
+    return (
+      <React.Fragment>
+      <List></List>
+    <ChatBot chatBotConfig = {this.state.chatBotConfig}></ChatBot>
+    </React.Fragment>
+    );
   }
 }

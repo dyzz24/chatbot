@@ -1,0 +1,33 @@
+.botCommandLog {
+        width: 300px;
+        position: absolute;
+        left: 10px;
+        top: 0;
+        max-height: 350px;
+        overflow-y: auto;
+        background: rgb(245, 248, 251);
+        padding-top: 16px;
+        padding-bottom: 6px;
+        
+        box-sizing: border-box;
+        border-radius: 6px;
+        list-style-position: inside;
+
+
+}
+
+.botCommandLog span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #557feb;
+
+}
+
+.botCommandLog li {
+    text-align: left;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
