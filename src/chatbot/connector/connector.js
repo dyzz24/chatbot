@@ -7,7 +7,7 @@ function mapDispatchToProps(dispatch) {
     addCommand: command => dispatch(addCommand(command))
   };
 }
-class Connect extends React.Component {
+class Emit extends React.Component {
   constructor(props) {
     super(props);
 
@@ -30,5 +30,5 @@ class Connect extends React.Component {
 const EmitEvent = connect(
   null,
   mapDispatchToProps
-)(Connect);
+)(Emit);
 export default EmitEvent;
