@@ -1,6 +1,7 @@
 import React from 'react';
 import './form.css';
 import Macros from './macros/macros';
+import Connector from '../connector/connector';
 
 
 
@@ -20,7 +21,12 @@ export default class Form extends React.Component {
       return;
     }
     this.props.sendMessage(txt);
+    this.emitValue(txt)
     this.inputElement.current.value = '';
+  }
+
+  emitValue = (val) => {
+    console.log(val)
   }
 
   setInputValue = (val) => {
@@ -64,6 +70,7 @@ export default class Form extends React.Component {
     {sendButton}
     </form>
     </div>
+    <Connector emit = {e => this.emitValue = e}></Connector>
     </React.Fragment>
     );
   }

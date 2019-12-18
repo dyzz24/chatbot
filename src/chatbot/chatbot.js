@@ -37,6 +37,7 @@ export default class ChatBot extends React.Component {
   child = React.createRef();
 
   componentDidMount() {
+
     this.botSpeakHello();
   }
 
@@ -76,7 +77,7 @@ export default class ChatBot extends React.Component {
 
     if (this.state.openSession) {
       const status = this.supportFeatures.parseUserEnter(text);
-      console.log(status);
+      console.log(this.child);
       this.child.current.switchActions(status.command, status.subCommand);
     }
   };
@@ -229,6 +230,7 @@ export default class ChatBot extends React.Component {
           handlerParentState={flag => this.handlerParentState(flag)}
           clearMessages = {this.clearMessages}
         ></Actions>
+        
         </div>
       </div>
     );
