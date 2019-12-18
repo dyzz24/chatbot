@@ -14,11 +14,11 @@ class Connect extends React.Component {
     this.state = {};
   }
 
-  editStore = (e) => {
+  emitEvent = (e) => {
     this.props.addCommand(e)
   }
   componentDidMount() {
-    this.props.emit(e => this.editStore(e))
+    this.props.emit(e => this.emitEvent(e))
   }
 
   render() {
@@ -27,8 +27,8 @@ class Connect extends React.Component {
 }
 
 
-const Connector = connect(
+const EmitEvent = connect(
   null,
   mapDispatchToProps
 )(Connect);
-export default Connector;
+export default EmitEvent;

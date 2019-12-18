@@ -1,7 +1,7 @@
 import React from 'react';
 import './form.css';
 import Macros from './macros/macros';
-import Connector from '../connector/connector';
+import EmitEvent from '../emitEvent/emitEvent';
 
 
 
@@ -70,7 +70,7 @@ export default class Form extends React.Component {
     {sendButton}
     </form>
     </div>
-    <Connector emit = {e => this.emitValue = e}></Connector>
+    <EmitEvent emit = {e => this.emitValue = e}></EmitEvent>
     </React.Fragment>
     );
   }
