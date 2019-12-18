@@ -8,7 +8,16 @@ import Actions from './actions/actions';
 import Form from './form/form';
 import { Header } from './header/header';
 
-export default class ChatBot extends React.Component {
+import { addBotAnswer } from '../redux/actions';
+import { connect } from "react-redux";
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addBotAnswer: answers => dispatch(addBotAnswer(answers))
+  };
+}
+
+class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,6 +103,10 @@ export default class ChatBot extends React.Component {
       text,
       id
     );
+
+    if(message.type === 'bot') {
+      this.props.addBotAnswer(message.message);
+    }
     this.setState(state => ({
       messages: [...state.messages, message]
     }));
@@ -236,3 +249,10 @@ export default class ChatBot extends React.Component {
     );
   }
 }
+
+
+const ChatBot = connect(
+  null,
+  mapDispatchToProps
+)(Chat);
+export default ChatBot;
