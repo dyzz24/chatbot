@@ -57,6 +57,7 @@ class Chat extends React.Component {
     this.setState({ botIsWriting: true });
     this.state.helloMessages.forEach((primaryText, index, arr) => {
       setTimeout(() => {
+        this.props.addBotAnswer(primaryText.message);
         this.setState(state => ({
           messages: [...state.messages, primaryText]
         }));
