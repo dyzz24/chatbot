@@ -1,77 +1,77 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import './form.css';
 import Macros from './macros/macros';
-import EmitEvent from '../emitEvent/emitEvent';
+
+import { connect } from "react-redux";
+import { mapDispatchToProps } from '../emitEvent/emitEvent';
 
 
+const EmptyForm = (props) => {
+  const inputElement = useRef();
 
-export default class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
 
-  inputElement = React.createRef();
-
-  sendMessage = (e) =>  {
+  const sendMessage = (e) =>  {
     e.preventDefault();
-    const txt = this.inputElement.current.value;
+    const txt = inputElement.current.value;
     if (!txt) {
       return;
     }
-    this.props.sendMessage(txt);
-    this.emitValue(txt)
-    this.inputElement.current.value = '';
+    props.sendMessage(txt);
+    emitValueToRedux(txt)
+    inputElement.current.value = '';
+    inputElement.current.focus();
   }
 
-  emitValue = (val) => {
-    console.log(val)
+  const emitValueToRedux = (val) => {
+    props.addCommand(val)
   }
 
-  setInputValue = (val) => {
-    this.inputElement.current.value = val;
-    this.inputElement.current.focus();
+
+  const setInputValue = (val) => {
+    inputElement.current.value = val;
+    inputElement.current.focus();
   }
 
-  componentDidMount() {
-    this.inputElement.current.focus();
-  }
 
-  showMacros = () => {
-    if(this.props.openSession) {
-      return  <Macros macrosList = {this.props.macrosList} setInputValue = {this.setInputValue}></Macros>
+  useEffect(() => {inputElement.current.focus()}, [])
+
+  const showMacros = () => {
+    if(props.openSession) {
+      return  <Macros macrosList = {props.macrosList} setInputValue = {setInputValue}></Macros>
     } else {
       return null;
     }
   }
 
-  showSendButton = () => {
-    if(this.props.botIsWaitingForName || this.props.openSession) {
-      return <i className = 'submitter' onClick={this.sendMessage}></i>
+  const showSendButton = () => {
+    if(props.botIsWaitingForName || props.openSession) {
+      return <i className = 'submitter' onClick={sendMessage}></i>
     } else {
       return null;
     }
   }
 
 
-  render() {
-
-    const macrosList = this.showMacros();
-    const sendButton = this.showSendButton();
+    const macrosList = showMacros();
+    const sendButton = showSendButton();
 
 
     return (
       <React.Fragment>
     {macrosList}
     <div className="chatBot__bottomblock">
-    <form onSubmit = {(e) => this.sendMessage(e)} placeholder = 'Введите текст'>
-    <input type="text" ref={this.inputElement}></input>
+    <form onSubmit = {(e) => sendMessage(e)} placeholder = 'Введите текст'>
+    <input type="text" ref={inputElement}></input>
     {sendButton}
     </form>
     </div>
-    <EmitEvent emit = {e => this.emitValue = e}></EmitEvent>
     </React.Fragment>
     );
-  }
 }
+
+const Form = connect(
+  null,
+  mapDispatchToProps
+)(EmptyForm);
+
+export default Form;

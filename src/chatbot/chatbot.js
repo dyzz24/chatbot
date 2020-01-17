@@ -86,7 +86,6 @@ class Chat extends React.Component {
 
     if (this.state.openSession) {
       const status = this.supportFeatures.parseUserEnter(text);
-      console.log(this.child);
       this.child.current.switchActions(status.command, status.subCommand);
     }
   };
