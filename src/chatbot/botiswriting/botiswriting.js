@@ -2,7 +2,7 @@ import React from 'react';
 import './botiswriting.css';
 
 
-export function BotIsWriting(props) {
+export function BotIsWriting({avatar}) {
 
 
 
@@ -10,7 +10,7 @@ export function BotIsWriting(props) {
 
       <div className = 'messageRow'>
       <div className = 'avatar'>
-        <img alt = 'botava' src = {props.avatar}></img>
+        <img alt = 'botava' src = {avatar}></img>
       </div>
       <span className = 'bigsize'><div>...</div></span></div> 
   )

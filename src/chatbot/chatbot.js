@@ -9,7 +9,7 @@ import Form from './form/form';
 import { Header } from './header/header';
 
 import { addBotAnswer } from '../redux/actions';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -46,7 +46,6 @@ class Chat extends React.Component {
   child = React.createRef();
 
   componentDidMount() {
-
     this.botSpeakHello();
   }
 
@@ -98,14 +97,13 @@ class Chat extends React.Component {
 
   // * отвечает за отображение сообщений с двух сторон (юзер и бот)
   addMessage = (type, text) => {
-    const id = (this.state.messages.length > 0) ? this.state.messages[this.state.messages.length - 1].id : 0;
-    const message = this.supportFeatures.messageGenerate(
-      type,
-      text,
-      id
-    );
+    const id =
+      this.state.messages.length > 0
+        ? this.state.messages[this.state.messages.length - 1].id
+        : 0;
+    const message = this.supportFeatures.messageGenerate(type, text, id);
 
-    if(message.type === 'bot') {
+    if (message.type === 'bot') {
       this.props.addBotAnswer(message.message);
     }
     this.setState(state => ({
@@ -171,89 +169,90 @@ class Chat extends React.Component {
     this.setState(state => ({
       hideBot: !state.hideBot
     }));
-
-  }
+  };
 
   fullScreen = () => {
-
     this.setState(state => ({
       fullScreen: !state.fullScreen
     }));
-
-  }
+  };
 
   clearMessages = () => {
     this.setState(state => ({
       messages: []
     }));
-  }
+  };
 
   returnScreenBotMode() {
     const hideBot = this.state.hideBot;
     const fullScreen = this.state.fullScreen;
 
-    if(hideBot && !fullScreen) {
-      return 'chatBot hide'
-    } else if(fullScreen) {
-      return 'chatBot fullScreen'
+    if (hideBot && !fullScreen) {
+      return 'chatBot hide';
+    } else if (fullScreen) {
+      return 'chatBot fullScreen';
     } else {
-      return 'chatBot'
+      return 'chatBot';
     }
   }
 
-  render() {
+  getBotState = () => {
     const messageList = this.viewMessages();
     const pendingBotWriting = this.state.botIsWriting;
-    const {botAvatarSrc, botName, botIsWaitingForName} = this.state;
     const classNameForBot = this.returnScreenBotMode();
-    const hide = this.state.hideBot;
-    const full = this.state.fullScreen;
+    return { messageList, pendingBotWriting, classNameForBot };
+  };
+
+  render() {
+    const botState = this.getBotState();
+    const {
+      botAvatarSrc,
+      botName,
+      botIsWaitingForName,
+      hideBot,
+      fullScreen
+    } = this.state;
 
     return (
       <div
-        className={classNameForBot}
+        className={botState.classNameForBot}
         style={{ width: this.state.boxWidth, height: this.state.boxHeight }}
       >
         <Header
           botAvatarSrc={botAvatarSrc}
           botName={botName}
-          hideBot = {this.hideBot}
-          fullScreen = {this.fullScreen}
-          hide = {hide}
-          full = {full}
+          hideBotMod={this.hideBot}
+          fullScreenMod={this.fullScreen}
+          hideBot={hideBot}
+          fullScreen={fullScreen}
         ></Header>
 
-        <div className = 'chatBot__wrapper' >
-        <div className="chatBot__body" id="bodyId">
-          {messageList}
-          {pendingBotWriting ? (
-            <BotIsWriting avatar={botAvatarSrc}></BotIsWriting>
-          ) : null}
-        </div>
-        <Form
-          sendMessage={this.sendMessage}
-          botIsWaitingForName={botIsWaitingForName}
-          openSession={this.state.openSession}
-          macrosList = {this.state.macrosList}
-        ></Form>
+        <div className='chatBot__wrapper'>
+          <div className='chatBot__body' id='bodyId'>
+            {botState.messageList}
+            {botState.pendingBotWriting ? (
+              <BotIsWriting avatar={botAvatarSrc}></BotIsWriting>
+            ) : null}
+          </div>
+          <Form
+            sendMessage={this.sendMessage}
+            botIsWaitingForName={botIsWaitingForName}
+            openSession={this.state.openSession}
+            macrosList={this.state.macrosList}
+          ></Form>
 
-        <Actions
-          ref={this.child}
-          addBotMessage={e => this.addBotMessage(e)}
-          addMessage={(type, msg) => this.addMessage(type, msg)}
-          handlerParentState={flag => this.handlerParentState(flag)}
-          clearMessages = {this.clearMessages}
-        ></Actions>
-        
+          <Actions
+            ref={this.child}
+            addBotMessage={e => this.addBotMessage(e)}
+            addMessage={(type, msg) => this.addMessage(type, msg)}
+            handlerParentState={flag => this.handlerParentState(flag)}
+            clearMessages={this.clearMessages}
+          ></Actions>
         </div>
       </div>
     );
   }
 }
 
-
-const ChatBot = connect(
-  null,
-  mapDispatchToProps
-)(Chat);
+const ChatBot = connect(null, mapDispatchToProps)(Chat);
 export default ChatBot;

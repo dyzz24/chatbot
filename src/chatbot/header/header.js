@@ -3,21 +3,20 @@ import './header.css';
 
 
 
-export const Header = (props) => {
+export const Header = ({botAvatarSrc, botName, hideBot, fullScreen, ...other }) => {
 
-  
 
   return(
     <div className="chatBot__header">
           <div className="header__section">
             <div className="header__botavatar">
-              <img alt="botavatar" src={props.botAvatarSrc}></img>
+              <img alt="botavatar" src={botAvatarSrc}></img>
             </div>
-            <span>{props.botName}</span>
+            <span>{botName}</span>
           </div>
           <div className = 'btnwrapper'>
-          <i className={props.hide ? 'hide active' : 'hide'} onClick = {props.hideBot} title = 'Свернуть'></i>
-          <i className={props.full ? "full active" : 'full'} onClick = {props.fullScreen} title = 'Полный экран'></i>
+          <i className={hideBot ? 'hide active' : 'hide'} onClick = {other.hideBotMod} title = 'Свернуть'></i>
+          <i className={fullScreen ? "full active" : 'full'} onClick = {other.fullScreenMod} title = 'Полный экран'></i>
           </div>
         </div>
   )
