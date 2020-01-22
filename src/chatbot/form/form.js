@@ -19,7 +19,6 @@ const EmptyForm = (props) => {
     props.sendMessage(txt);
     emitValueToRedux(txt)
     inputElement.current.value = '';
-    inputElement.current.focus();
   }
 
   const emitValueToRedux = (val) => {
@@ -29,11 +28,11 @@ const EmptyForm = (props) => {
 
   const setInputValue = (val) => {
     inputElement.current.value = val;
-    inputElement.current.focus();
   }
 
 
-  useEffect(() => {inputElement.current.focus()}, [])
+  // always focus on input
+  useEffect(() => {inputElement.current.focus()});
 
   const showMacros = () => {
     if(props.openSession) {
