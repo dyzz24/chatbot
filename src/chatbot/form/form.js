@@ -28,6 +28,7 @@ const EmptyForm = (props) => {
 
   const setInputValue = (val) => {
     inputElement.current.value = val;
+    inputElement.current.focus();
   }
 
 

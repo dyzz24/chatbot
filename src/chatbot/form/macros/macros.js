@@ -3,16 +3,11 @@ import './macros.css';
 
 
 
-export default class Macros extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+const Macros = ({macrosList, setInputValue}) => {
 
-  macrosListCreate() {
-    const macrosLis = this.props.macrosList.map((message, index) => (
-      <li key = {index} className = 'macros' onClick = {(val) => this.setInputValue(message.command)}>
+  const macrosListCreate = () => {
+    const macrosLis = macrosList.map((message, index) => (
+      <li key = {index} className = 'macros' onClick = {(val) => setValue(message.command)}>
         {message.title}
       </li>
     ));
@@ -20,18 +15,19 @@ export default class Macros extends React.Component {
     return macrosLis
   }
 
-  setInputValue(newInpVal) {
-      this.props.setInputValue(newInpVal);
+  const setValue = (newInpVal) => {
+      setInputValue(newInpVal);
   }
 
+  const listOfMacross = macrosListCreate();
 
-  render() {
-    const macrosList = this.macrosListCreate();
 
     return (
       <ul className = 'macrosList'>
-          {macrosList}
+          {listOfMacross}
     </ul>
     );
   }
-}
+
+  export default Macros;
+
