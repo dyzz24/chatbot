@@ -2,40 +2,30 @@ import React from 'react';
 import './message.css';
 
 
-export class Message extends React.Component {
+export const Message = ({type, avatar, message}) => {
 
-  constructor(props) {
-    super()
-  }
 
-  createMarkup = html => {
+  const createMarkup = html => {
     return { __html: String(html) };
   };
 
-  render() {
-    const mType = this.props.type;
-    if(mType === 'bot' || !mType) {
-      return (
-        <div className = 'messageRow'>
-          <div className = 'avatar'>
-            <img alt = 'botava' src = {this.props.avatar}></img>
-          </div>
-      <span dangerouslySetInnerHTML={this.createMarkup(this.props.message)}></span></div>
-      )
-    }
-
-    if(mType === 'user') {
-      return (
-        <div className = 'messageRow reverse'>
-          <div className = 'avatar'>
-            <img alt = 'userava' src = {this.props.avatar}></img>
-          </div>
-          <span dangerouslySetInnerHTML={this.createMarkup(this.props.message)}></span></div>
-      )
-    }
+  if(type === 'bot' || !type) {
+    return (
+      <div className = 'messageRow'>
+        <div className = 'avatar'>
+          <img alt = 'botava' src = {avatar}></img>
+        </div>
+      <span dangerouslySetInnerHTML={createMarkup(message)}></span>
+      </div>
+    );
+  } else {
+    return (
+      <div className = 'messageRow reverse'>
+        <div className = 'avatar'>
+          <img alt = 'userava' src = {avatar}></img>
+        </div>
+        <span dangerouslySetInnerHTML={createMarkup(message)}></span></div>
+    )
   }
-
-
-
-
 }
+
