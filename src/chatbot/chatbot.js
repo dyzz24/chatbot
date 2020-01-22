@@ -20,16 +20,18 @@ function mapDispatchToProps(dispatch) {
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
+    const config = this.props.chatBotConfig;
     this.state = {
-      title: this.props.chatBotConfig.title,
-      botName: this.props.chatBotConfig.botName,
-      boxWidth: this.props.chatBotConfig.boxWidth,
-      boxHeight: this.props.chatBotConfig.boxHeight,
-      botAvatarSrc: this.props.chatBotConfig.botAvatarSrc,
-      userAvatarSrc: this.props.chatBotConfig.userAvatarSrc,
-      messageTimeOut: this.props.chatBotConfig.messageTimeOut,
-      helloMessages: this.props.chatBotConfig.helloMessages,
-      macrosList: this.props.chatBotConfig.macrosList,
+      title: config.title,
+      botName: config.botName,
+      boxWidth: config.boxWidth,
+      boxHeight: config.boxHeight,
+      botAvatarSrc: config.botAvatarSrc,
+      userAvatarSrc: config.userAvatarSrc,
+      messageTimeOut: config.messageTimeOut,
+      helloMessages: config.helloMessages,
+      macrosList: config.macrosList,
       messages: [],
 
       botIsWriting: false,

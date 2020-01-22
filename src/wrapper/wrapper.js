@@ -1,15 +1,13 @@
 import React from 'react';
 import './wrapper.css';
 import ChatBot from '../chatbot/chatbot';
-import List from './connectedList/list';
 
 
 
-export default class Wrapper extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      chatBotConfig : {
+const Wrapper = () => {
+
+
+    const botData = {
         title: 'Чат-бот',
         botName: 'Test-bot',
         boxWidth: 400,
@@ -22,7 +20,7 @@ export default class Wrapper extends React.Component {
         {type: 'bot', message: 'Как тебя зовут?', id: 2}
       ],
       macrosList: [
-        {title: 'Помощь', command:'/help '}, 
+        {title: 'Помощь', command:'/help '},
         {title: 'Игра', command:'/play '},
         {title: 'Погода', command:'/weather '},
         {title: 'Перевод', command:'/translate '},
@@ -30,19 +28,11 @@ export default class Wrapper extends React.Component {
         {title: 'Новости', command: '/news '},
         {title: 'Очистить', command: '/clear '}
       ]
-      }
     };
-  }
 
 
-  render() {
-
-
-    return (
-
-     
-    <ChatBot chatBotConfig = {this.state.chatBotConfig}></ChatBot>
-
-    );
-  }
+    return (<ChatBot chatBotConfig = {botData}></ChatBot>);
 }
+
+
+export default Wrapper;
