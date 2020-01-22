@@ -20,7 +20,6 @@ function mapDispatchToProps(dispatch) {
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     const config = this.props.chatBotConfig;
     this.state = {
       title: config.title,
