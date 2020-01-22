@@ -1,15 +1,12 @@
-import React from 'react';
-import Httpservice from '../httpservice/httpservice';
 
-export default class SupportFeatures extends React.Component {
-  http = new Httpservice();
-  API = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  APIID = '&appid=0f49363de5af37c512e1a84dd3bab4dd';
+const SupportFeatures = (APIDATA, service) => {
+  const http = new service();
+  const {API} = APIDATA;
+  const {APIID} = APIDATA;
+  const {NEWSAPI} = APIDATA;
+  const {NEWSAPIID} = APIDATA;
 
-  NEWSAPI = `https://newsapi.org/v2/everything?`
-  NEWSAPIID = `&apiKey=3b6b407a27cb4e4aae3d332cccb3b103`
-
-  messageGenerate(type, text, id) {
+  const messageGenerate = (type, text, id) => {
     const message = {
       id: id + Math.random(),
       type: type,
@@ -17,9 +14,9 @@ export default class SupportFeatures extends React.Component {
     };
 
     return message;
-  }
+  };
 
-  parseUserEnter(userString) {
+  const parseUserEnter = userString => {
     const text = userString.trim();
 
     if (text.match(/^help$/) || text.match(/^\/help$/)) {
@@ -41,22 +38,21 @@ export default class SupportFeatures extends React.Component {
       return { command: 'bestsellers' };
     } else if (text.match(/\/clear/)) {
       return { command: 'clear' };
-    }  else if (text.match(/\/news/)) {
+    } else if (text.match(/\/news/)) {
       const news = text.replace('/news', '').trim();
       return { command: 'news', subCommand: news };
-    }
-    else {
+    } else {
       return { command: 'null' };
     }
-  }
+  };
 
   // * for play */
-  randomNumberGenerate() {
+  const randomNumberGenerate = () => {
     const randomNumber = Math.floor(Math.random() * 100) + 1;
     return randomNumber;
-  }
+  };
 
-  numberComprasion(randomNumber, userNumber) {
+  const numberComprasion = (randomNumber, userNumber) => {
     if (randomNumber > userNumber) {
       return 'Я выиграл';
     }
@@ -68,38 +64,37 @@ export default class SupportFeatures extends React.Component {
     if (randomNumber === userNumber) {
       return 'Ничья';
     }
-  }
+  };
 
-  async getWeather(cityName) {
-    const data = this.http.getData(`${this.API}${cityName}${this.APIID}`);
+  const getWeather = async cityName => {
+    const data = http.getData(`${API}${cityName}${APIID}`);
     return data;
-  }
+  };
 
-  async getTranslate(text) {
-    const data = this.http
-      .getOtherData(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=
+  const getTranslate = async text => {
+    const data = http.getOtherData(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=
     trnsl.1.1.20191210T104539Z.2eeb161aebc81077.45334090b358589ba100668eaa847973ede8bcc7&text=${text}&lang=ru`);
     return data;
-  }
+  };
 
-  async getBestsellers() {
-    const data = this.http.getOtherData(
+  const getBestsellers = async () => {
+    const data = http.getOtherData(
       `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?api-key=3RyIGqWqdJRZwGpSYM6WJLkXGHXQceCx`
     );
     return data;
-  }
+  };
 
-  async getLastNews(newsFrom) {
-    const data = this.http.getOtherData(
-      `${this.NEWSAPI}q=${newsFrom}&sortBy=publishedAt${this.NEWSAPIID}`
+  const getLastNews = async newsFrom => {
+    const data = http.getOtherData(
+      `${NEWSAPI}q=${newsFrom}&sortBy=publishedAt${NEWSAPIID}`
     );
     return data;
-  }
+  };
 
-  parseBestsellers(bestArray, descriptSlice, maxBestsellersCount) {
+  const parseBestsellers = (bestArray, descriptSlice, maxBestsellersCount) => {
     if (bestArray && bestArray.length > 0) {
       const bestSellers = bestArray
-      // * выдать определенное количество записей
+        // * выдать определенное количество записей
         .filter((v, ind) => ind < maxBestsellersCount)
         .map(items => {
           // * обрезать строку и поставить ... в конце
@@ -114,5 +109,19 @@ export default class SupportFeatures extends React.Component {
 
       return bestSellers;
     }
-  }
-}
+  };
+
+  return {
+    messageGenerate,
+    parseUserEnter,
+    randomNumberGenerate,
+    numberComprasion,
+    getWeather,
+    getTranslate,
+    getBestsellers,
+    getLastNews,
+    parseBestsellers
+  };
+};
+
+export default SupportFeatures;

@@ -7,9 +7,9 @@ import { animateScroll } from 'react-scroll';
 import Actions from './actions/actions';
 import Form from './form/form';
 import { Header } from './header/header';
-
 import { addBotAnswer } from '../redux/actions';
 import { connect } from 'react-redux';
+import Httpservice from './httpservice/httpservice';
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -41,7 +41,15 @@ class Chat extends React.Component {
     };
   }
 
-  supportFeatures = new SupportFeatures();
+  APIDATA = {
+    API: 'https://api.openweathermap.org/data/2.5/weather?q=',
+    APIID: '&appid=0f49363de5af37c512e1a84dd3bab4dd',
+    NEWSAPI: 'https://newsapi.org/v2/everything?',
+    NEWSAPIID: '&apiKey=3b6b407a27cb4e4aae3d332cccb3b103'
+  }
+
+  supportFeatures = SupportFeatures(this.APIDATA, Httpservice);
+  
 
   child = React.createRef();
 
