@@ -1,6 +1,7 @@
 import React from 'react';
 import SupportFeatures from '../support-features/support-features';
 import Httpservice from '../httpservice/httpservice';
+import { APIDATA } from '../APIDATA';
 
 export default class Actions extends React.Component {
   constructor(props) {
@@ -9,14 +10,9 @@ export default class Actions extends React.Component {
     this.state = {};
   }
 
-  APIDATA = {
-    API: 'https://api.openweathermap.org/data/2.5/weather?q=',
-    APIID: '&appid=0f49363de5af37c512e1a84dd3bab4dd',
-    NEWSAPI: 'https://newsapi.org/v2/everything?',
-    NEWSAPIID: '&apiKey=3b6b407a27cb4e4aae3d332cccb3b103'
-  }
 
-  supportFeatures = SupportFeatures(this.APIDATA, Httpservice);
+
+  supportFeatures = SupportFeatures(APIDATA, Httpservice);
 
   switchActions = (action, subAction) => {
     switch (action) {
